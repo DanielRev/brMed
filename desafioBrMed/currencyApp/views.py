@@ -1,32 +1,26 @@
-# from django.shortcuts import render
-# from django.http import HttpResponse
-
-
-# def index(request):
-#     return HttpResponse("Hello, world. You're at the polls index.")
+from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.template import loader
 from . import currency
 
 def index(request):
-    template = loader.get_template('currencyApp/index.html')
-    context = {
-        'latest_question_list': 1,
-    }
-    return HttpResponse(template.render(context, request))
+	template = loader.get_template('currencyApp/index.html')
+	context = currency.Currency().rates
+	#return HttpResponse(template.render(context, request))
+	#return render(request, 'currencyApp/index.html', context)
+	return render(request, 'currencyApp/index.html', {'rates': context})
 
-
-import requests 
-from datetime import date
 
 #Temporario, remover
+import requests 
+from datetime import date
 def teste(request):
 	c = currency.Currency()
 	# print(c.teste())
 	d = date(2002, 12, 31)
 	c.getRatesForDate(d)
-	print(c.rates)
+	#print(c.rates)
 	return HttpResponse(c.rates)
 
 def teste2(request):

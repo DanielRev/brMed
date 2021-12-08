@@ -3,39 +3,48 @@
 </head>
 
 <body>
-Abacate
-
+	Abacate
+	<!-- {{rates}} -->
+	<!-- {%for date in rates%}
+		{{date}}
+	{%endfor%} -->
 	<div id="container" style="width:100%; height:400px;"></div>	
 </body>
 
 <script type="text/javascript">
+	teste = {{rates|safe}};
+	console.log(teste);
 	document.addEventListener('DOMContentLoaded', function () {
         const chart = Highcharts.chart('container', {
-            chart: {
-                type: 'bar'
-            },
+           
             title: {
-                text: 'Fruit Consumption'
+                text: 'Comparador de Moedas'
             },
             xAxis: {
                 categories: ['Apples', 'Bananas', 'Oranges']
+                // title: {
+                //     text: 'Dias'
+                // }
             },
             yAxis: {
                 title: {
-                    text: 'Fruit eaten'
+                    text: 'Dollares'
                 }
             },
             series: [{
-                name: 'Jane',
+                name: 'Iene',
                 data: [1, 0, 4]
             }, {
-                name: 'John',
+                name: 'Real',
+                data: [3, 8, 2]
+            }, {
+                name: 'Euro',
                 data: [5, 7, 3]
             }]
         });
     });
 
-	
+
 	
 	// let chart; // globally available
  //    document.addEventListener('DOMContentLoaded', function() {
