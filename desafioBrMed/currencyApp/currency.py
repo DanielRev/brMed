@@ -31,7 +31,7 @@ class Currency:
 	def getLast5BuisnessDays(self):
 		today = datetime.datetime.today()
 		buisness_days = []
-		for n in range(6):
+		for n in range(5):
 			#print(n)
 			buisness_days.append(today - BDay(n))
 		return buisness_days

@@ -3,7 +3,7 @@
 </head>
 
 <body>
-	Abacate
+	Abacate teste
 	<!-- {{rates}} -->
 	<!-- {%for date in rates%}
 		{{date}}
@@ -12,8 +12,29 @@
 </body>
 
 <script type="text/javascript">
-	teste = {{rates|safe}};
-	console.log(teste);
+	//Tratamento dos dados para ficar conveniente de usar no highcharts.
+	//TODO: fazer isto no backend
+	var raw_data = {{rates|safe}};
+	// console.log(raw_data);
+	var dates = [];
+	var coin_series = {};
+	coin_series['EUR'] = [];
+	coin_series['BRL'] = [];
+	coin_series['JPY'] = [];
+	for (var date in raw_data) {
+		// console.log(date);
+		dates.push(date);
+		// console.log(raw_data[date]);
+		coin_series['EUR'].push(raw_data[date]['EUR']);
+		coin_series['BRL'].push(raw_data[date]['BRL']);
+		coin_series['JPY'].push(raw_data[date]['JPY']);
+	}
+	// console.log(coin_series);
+
+	//O que precisa ser feito: Alterar periodo(ate 5 dias) e Alterar moedas exibidas no charts (dentre essas 3)
+	//Todo: carregar simbolos de moedas do back para usar aqui tmb
+
+	//Criacao do highcharts
 	document.addEventListener('DOMContentLoaded', function () {
         const chart = Highcharts.chart('container', {
            
@@ -21,41 +42,29 @@
                 text: 'Comparador de Moedas'
             },
             xAxis: {
-                categories: ['Apples', 'Bananas', 'Oranges']
-                // title: {
-                //     text: 'Dias'
-                // }
+            	type: 'datetime',
+            	title: {
+            		text: 'ultimos 5 dias uteis'
+            	},
+                categories: dates
             },
             yAxis: {
+            	type: 'logarithmic',
                 title: {
                     text: 'Dollares'
                 }
             },
             series: [{
                 name: 'Iene',
-                data: [1, 0, 4]
+                data: coin_series['JPY']
             }, {
                 name: 'Real',
-                data: [3, 8, 2]
+                data: coin_series['BRL']
             }, {
                 name: 'Euro',
-                data: [5, 7, 3]
+                data: coin_series['EUR']
             }]
         });
     });
 
-
-	
-	// let chart; // globally available
- //    document.addEventListener('DOMContentLoaded', function() {
- //        chart = Highcharts.stockChart('container', {
- //            rangeSelector: {
- //                selected: 1
- //            },
- //            series: [{
- //                name: 'USD to EUR',
- //                data: usdtoeur // predefined JavaScript array
- //           }]
- //       });
- //    });
 </script>
